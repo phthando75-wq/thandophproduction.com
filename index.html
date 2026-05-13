@@ -18,6 +18,7 @@
                     <li><a href="#home">Home</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#music">Music</a></li>
+                    <li><a href="#submit">Submit Music</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </div>
@@ -78,6 +79,63 @@
             </ul>
         </section>
 
+        <!-- Submit Music Section -->
+        <section id="submit" class="section music-upload">
+            <h2>Submit Your Music</h2>
+            <p>Are you an artist or producer? Submit your tracks for consideration!</p>
+            
+            <div class="upload-container">
+                <form id="musicUploadForm" class="upload-form">
+                    <div class="form-group">
+                        <label for="artistName">Artist Name *</label>
+                        <input type="text" id="artistName" name="artistName" placeholder="Your Artist Name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="trackTitle">Track Title *</label>
+                        <input type="text" id="trackTitle" name="trackTitle" placeholder="Song Title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="genre">Genre *</label>
+                        <select id="genre" name="genre" required>
+                            <option value="">Select a genre</option>
+                            <option value="Amapiano">Amapiano</option>
+                            <option value="Deep House">Deep House</option>
+                            <option value="Jazz Fusion">Jazz Fusion</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="musicFile">Upload Track (MP3, WAV - Max 50MB) *</label>
+                        <div class="file-upload">
+                            <input type="file" id="musicFile" name="musicFile" accept=".mp3,.wav,.m4a" required>
+                            <span class="file-name">No file chosen</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Track Description</label>
+                        <textarea id="description" name="description" placeholder="Tell us about your track..." rows="4"></textarea>
+                    </div>
+
+                    <div class="form-group checkbox">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <label for="terms">I agree to the submission terms and conditions *</label>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Submit Track</button>
+                    <p class="submission-info">💡 Tip: Make sure your track is well-mixed and mastered for the best chance of being featured!</p>
+                </form>
+            </div>
+        </section>
+
         <!-- Connect Section -->
         <section id="contact" class="section">
             <h2>Connect</h2>
@@ -92,7 +150,7 @@
             </div>
             <div class="contact-form">
                 <h3>Get in Touch</h3>
-                <form>
+                <form id="contactForm">
                     <input type="text" placeholder="Your Name" required>
                     <input type="email" placeholder="Your Email" required>
                     <textarea placeholder="Your Message" rows="5" required></textarea>
@@ -108,6 +166,16 @@
         <p>&copy; 2026 DJy Thando PH. All rights reserved.</p>
         <p>Powered by Dlomo Entertainment</p>
     </footer>
+
+    <!-- Upload Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>✅ Upload Successful!</h2>
+            <p>Thank you for submitting your track! We'll review it and get back to you within 7 days.</p>
+            <button class="btn-primary" onclick="closeModal()">Got it!</button>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
