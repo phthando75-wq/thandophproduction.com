@@ -9,8 +9,78 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+// File upload handling
+const musicFile = document.getElementById('musicFile');
+const fileName = document.querySelector('.file-name');
+
+if (musicFile) {
+    musicFile.addEventListener('change', function(e) {
+        const file = this.files[0];
+        if (file) {
+            const fileSize = file.size / (1024 * 1024); // Convert to MB
+            const maxSize = 50;
+            
+            if (fileSize > maxSize) {
+                alert(`File size must be less than ${maxSize}MB. Your file is ${fileSize.toFixed(2)}MB`);
+                this.value = '';
+                fileName.textContent = 'No file chosen';
+                return;
+            }
+            
+            fileName.textContent = file.name;
+        }
+    });
+}
+
+// Music upload form handling
+document.getElementById('musicUploadForm')?.addEventListener('submit', function (e) {
+    e.preventDefault();
+    
+    const artistName = document.getElementById('artistName').value;
+    const email = document.getElementById('email').value;
+    const trackTitle = document.getElementById('trackTitle').value;
+    const genre = document.getElementById('genre').value;
+    const musicFile = document.getElementById('musicFile').files[0];
+    const description = document.getElementById('description').value;
+    const terms = document.getElementById('terms').checked;
+    
+    // Validation
+    if (!artistName || !email || !trackTitle || !genre || !musicFile || !terms) {
+        alert('Please fill in all required fields and accept the terms');
+        return;
+    }
+    
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address');
+        return;
+    }
+    
+    // File size check
+    const fileSize = musicFile.size / (1024 * 1024);
+    if (fileSize > 50) {
+        alert('File size must be less than 50MB');
+        return;
+    }
+    
+    // Check file type
+    const validTypes = ['audio/mpeg', 'audio/wav', 'audio/mp4'];
+    if (!validTypes.includes(musicFile.type)) {
+        alert('Please upload an MP3, WAV, or M4A file');
+        return;
+    }
+    
+    // Show success modal
+    showModal();
+    
+    // Reset form
+    this.reset();
+    fileName.textContent = 'No file chosen';
+});
+
 // Contact form handling
-document.querySelector('.contact-form form')?.addEventListener('submit', function (e) {
+document.getElementById('contactForm')?.addEventListener('submit', function (e) {
     e.preventDefault();
     
     const name = this.querySelector('input[placeholder="Your Name"]').value;
@@ -31,9 +101,32 @@ document.querySelector('.contact-form form')?.addEventListener('submit', functio
     }
     
     // For now, just show success message
-    // In production, you'd send this to a backend or email service
     alert('Thank you for your message! We\'ll get back to you soon.');
     this.reset();
+});
+
+// Modal functions
+function showModal() {
+    const modal = document.getElementById('successModal');
+    modal.classList.add('show');
+    modal.style.display = 'flex';
+}
+
+function closeModal() {
+    const modal = document.getElementById('successModal');
+    modal.classList.remove('show');
+    modal.style.display = 'none';
+}
+
+// Close modal when clicking the X button
+document.querySelector('.close')?.addEventListener('click', closeModal);
+
+// Close modal when clicking outside of it
+window.addEventListener('click', function(event) {
+    const modal = document.getElementById('successModal');
+    if (event.target === modal) {
+        closeModal();
+    }
 });
 
 // Intersection Observer for fade-in animations
@@ -85,7 +178,9 @@ if ('IntersectionObserver' in window) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const img = entry.target;
-                img.src = img.dataset.src;
+                if (img.dataset.src) {
+                    img.src = img.dataset.src;
+                }
                 img.classList.add('loaded');
                 observer.unobserve(img);
             }
@@ -95,15 +190,4 @@ if ('IntersectionObserver' in window) {
     document.querySelectorAll('img[data-src]').forEach(img => imageObserver.observe(img));
 }
 
-// Mobile menu toggle (if you add a mobile menu button)
-const menuBtn = document.querySelector('.menu-btn');
-const navLinks = document.querySelector('.nav-links');
-
-if (menuBtn) {
-    menuBtn.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        menuBtn.classList.toggle('active');
-    });
-}
-
-console.log('DJy Thando PH Portfolio - Loaded');
+console.log('🎵 DJy Thando PH Portfolio - Loaded');
